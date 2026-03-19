@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<title>OMODY</title>
 
 <style>
 body {
@@ -14,7 +14,17 @@ body {
   background: black;
 }
 
-/* 🔵🟠 Energy Background */
+/* 🔥 CINEMATIC FADE */
+body {
+  animation: fadeIn 1.5s ease forwards;
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+/* 🔵🟠 ENERGY BACKGROUND */
 body::before {
   content: "";
   position: fixed;
@@ -31,7 +41,7 @@ body::before {
   100% { transform: translateX(-5%); }
 }
 
-/* Glow lines */
+/* ⚡ ENERGY LINES */
 .lines {
   position: fixed;
   inset: 0;
@@ -43,44 +53,55 @@ body::before {
 }
 
 @keyframes moveLines {
-  0% { background-position: -200px 0, 200px 0; }
-  100% { background-position: 200px 0, -200px 0; }
+  0% { background-position: -300px 0, 300px 0; }
+  100% { background-position: 300px 0, -300px 0; }
 }
 
-/* Logo */
+/* 🔥 PARTICLES */
+canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+
+/* LOGO */
 .logo {
   margin-top: 60px;
   width: 200px;
+  z-index: 2;
+  position: relative;
   filter:
-    drop-shadow(0 0 25px #0A1AFF)
-    drop-shadow(0 0 25px #FF6A00);
+    drop-shadow(0 0 30px #0A1AFF)
+    drop-shadow(0 0 30px #FF6A00);
   animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
-  0% { transform: scale(1); }
   50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
 }
 
-/* Title */
+/* TITLE */
 h1 {
   margin-top: 15px;
   font-size: 36px;
   letter-spacing: 4px;
+  z-index: 2;
+  position: relative;
   background: linear-gradient(90deg, #0A1AFF, #FF6A00);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* Container */
+/* CONTAINER */
 .container {
   max-width: 400px;
   margin: auto;
   padding: 20px;
+  position: relative;
+  z-index: 2;
 }
 
-/* Buttons */
+/* BUTTONS */
 .button {
   display: block;
   margin: 18px 0;
@@ -93,13 +114,11 @@ h1 {
 
   background: rgba(255,255,255,0.05);
   backdrop-filter: blur(10px);
-
   border: 1px solid rgba(255,255,255,0.2);
 
   transition: 0.3s;
 }
 
-/* Hover */
 .button:hover {
   transform: scale(1.1);
   box-shadow:
@@ -107,44 +126,86 @@ h1 {
     0 0 30px #FF6A00;
 }
 
-/* Footer */
+/* FOOTER */
 .footer {
   margin-top: 40px;
   font-size: 13px;
   color: #aaa;
   letter-spacing: 2px;
+  z-index: 2;
+  position: relative;
 }
 </style>
-
 </head>
 
 <body>
 
 <div class="lines"></div>
+<canvas id="particles"></canvas>
 
 <img src="omody_main_logo.png" class="logo">
 
-<h1>OMODY</h1>
 
 <div class="container">
-
-<a class="button" href="https://twitch.tv/OMODYTV">
-🎮 Twitch
-</a>
-
-<a class="button" href="https://kick.com/OMODYTV">
-🎥 Kick
-</a>
-
-<a class="button" href="https://youtube.com/@OMODYTV/live">
-▶️ YouTube
-</a>
-
+<a class="button" href="https://twitch.tv/OMODYTV">🎮 Twitch</a>
+<a class="button" href="https://kick.com/OMODYTV">🎥 Kick</a>
+<a class="button" href="https://youtube.com/@OMODYTV/live">▶️ YouTube</a>
 </div>
 
-<div class="footer">
-LIVE • CLIPS • CONTENT
-</div>
+<div class="footer">LIVE • CLIPS • CONTENT</div>
+
+<!-- 🔊 SOUND -->
+<audio id="sound" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"></audio>
+
+<script>
+// 🔊 play sound once
+window.onload = () => {
+  document.body.addEventListener('click', () => {
+    document.getElementById("sound").play();
+  }, { once: true });
+};
+
+// ✨ PARTICLES ENGINE
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+for (let i = 0; i < 80; i++) {
+  particles.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    size: Math.random() * 2,
+    speedX: (Math.random() - 0.5) * 1,
+    speedY: (Math.random() - 0.5) * 1
+  });
+}
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  particles.forEach(p => {
+    p.x += p.speedX;
+    p.y += p.speedY;
+
+    if (p.x < 0 || p.x > canvas.width) p.speedX *= -1;
+    if (p.y < 0 || p.y > canvas.height) p.speedY *= -1;
+
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+
+    ctx.fillStyle = Math.random() > 0.5 ? "#0A1AFF" : "#FF6A00";
+    ctx.fill();
+  });
+
+  requestAnimationFrame(animate);
+}
+
+animate();
+</script>
 
 </body>
 </html>
