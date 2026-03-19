@@ -12,10 +12,6 @@ body {
   text-align: center;
   overflow: hidden;
   background: black;
-}
-
-/* 🔥 CINEMATIC FADE */
-body {
   animation: fadeIn 1.5s ease forwards;
   opacity: 0;
 }
@@ -57,7 +53,7 @@ body::before {
   100% { background-position: 300px 0, -300px 0; }
 }
 
-/* 🔥 PARTICLES */
+/* PARTICLES */
 canvas {
   position: fixed;
   inset: 0;
@@ -114,6 +110,39 @@ canvas {
     0 0 30px #FF6A00;
 }
 
+/* 💸 DONATE SPARKLE */
+.donate-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.donate-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.7),
+    transparent
+  );
+  transform: skewX(-20deg);
+}
+
+/* animation trigger */
+.donate-btn.sparkle::before {
+  animation: shine 0.8s;
+}
+
+@keyframes shine {
+  100% {
+    left: 125%;
+  }
+}
+
 /* FOOTER */
 .footer {
   margin-top: 40px;
@@ -141,7 +170,7 @@ canvas {
 
 <a class="button" href="https://kick.com/OMODYTV">🎥 Kick</a>
 
-<a class="button" href="https://YOUR-DONATION-LINK" target="_blank">
+<a class="button donate-btn" id="donateBtn" href="https://YOUR-DONATION-LINK" target="_blank">
 💸 Donate
 </a>
 
@@ -149,18 +178,18 @@ canvas {
 
 <div class="footer">LIVE • CLIPS • CONTENT</div>
 
-<!-- 🔊 SOUND -->
+<!-- SOUND -->
 <audio id="sound" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"></audio>
 
 <script>
-// 🔊 play sound once
+// 🔊 sound
 window.onload = () => {
   document.body.addEventListener('click', () => {
     document.getElementById("sound").play();
   }, { once: true });
 };
 
-// ✨ PARTICLES ENGINE
+// ✨ PARTICLES
 const canvas = document.getElementById("particles");
 const ctx = canvas.getContext("2d");
 
@@ -174,8 +203,8 @@ for (let i = 0; i < 80; i++) {
     x: Math.random() * canvas.width,
     y: Math.random() * canvas.height,
     size: Math.random() * 2,
-    speedX: (Math.random() - 0.5) * 1,
-    speedY: (Math.random() - 0.5) * 1
+    speedX: (Math.random() - 0.5),
+    speedY: (Math.random() - 0.5)
   });
 }
 
@@ -198,8 +227,23 @@ function animate() {
 
   requestAnimationFrame(animate);
 }
-
 animate();
+
+// 💸 AUTO SPARKLE LOOP
+const donateBtn = document.getElementById("donateBtn");
+
+function triggerSparkle() {
+  donateBtn.classList.add("sparkle");
+  setTimeout(() => {
+    donateBtn.classList.remove("sparkle");
+  }, 800);
+}
+
+// أول مرة بعد فتح الصفحة
+setTimeout(triggerSparkle, 1000);
+
+// كل ثانيتين
+setInterval(triggerSparkle, 2000);
 </script>
 
 </body>
