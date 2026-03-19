@@ -11,23 +11,56 @@ body {
   color: white;
   text-align: center;
   overflow: hidden;
-
-  background: linear-gradient(90deg, #0A1AFF 50%, #FF6A00 50%);
+  background: black;
 }
 
-/* Overlay for blending */
+/* 🔵🟠 Energy Background */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle, transparent 30%, black 90%);
+  background: 
+    radial-gradient(circle at 20% 50%, #0A1AFF55, transparent 60%),
+    radial-gradient(circle at 80% 50%, #FF6A0055, transparent 60%);
+  animation: energyMove 6s infinite linear;
+}
+
+@keyframes energyMove {
+  0% { transform: translateX(-5%); }
+  50% { transform: translateX(5%); }
+  100% { transform: translateX(-5%); }
+}
+
+/* Glow lines */
+.lines {
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(120deg, transparent 40%, #0A1AFF 50%, transparent 60%),
+    linear-gradient(-120deg, transparent 40%, #FF6A00 50%, transparent 60%);
+  opacity: 0.1;
+  animation: moveLines 4s linear infinite;
+}
+
+@keyframes moveLines {
+  0% { background-position: -200px 0, 200px 0; }
+  100% { background-position: 200px 0, -200px 0; }
 }
 
 /* Logo */
 .logo {
   margin-top: 60px;
   width: 200px;
-  filter: drop-shadow(0 0 25px #FF6A00) drop-shadow(0 0 25px #0A1AFF);
+  filter:
+    drop-shadow(0 0 25px #0A1AFF)
+    drop-shadow(0 0 25px #FF6A00);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
 }
 
 /* Title */
@@ -35,10 +68,9 @@ h1 {
   margin-top: 15px;
   font-size: 36px;
   letter-spacing: 4px;
-  color: white;
-  text-shadow:
-    -2px 0 #0A1AFF,
-    2px 0 #FF6A00;
+  background: linear-gradient(90deg, #0A1AFF, #FF6A00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* Container */
@@ -69,17 +101,17 @@ h1 {
 
 /* Hover */
 .button:hover {
-  transform: scale(1.08);
+  transform: scale(1.1);
   box-shadow:
-    0 0 20px #0A1AFF,
-    0 0 20px #FF6A00;
+    0 0 30px #0A1AFF,
+    0 0 30px #FF6A00;
 }
 
 /* Footer */
 .footer {
   margin-top: 40px;
   font-size: 13px;
-  color: #ccc;
+  color: #aaa;
   letter-spacing: 2px;
 }
 </style>
@@ -87,6 +119,8 @@ h1 {
 </head>
 
 <body>
+
+<div class="lines"></div>
 
 <img src="omody_main_logo.png" class="logo">
 
