@@ -8,50 +8,37 @@
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: radial-gradient(circle at center, #0A1AFF 0%, #000 60%);
   color: white;
   text-align: center;
-  overflow-x: hidden;
+  overflow: hidden;
+
+  background: linear-gradient(90deg, #0A1AFF 50%, #FF6A00 50%);
 }
 
-/* Background glow animation */
+/* Overlay for blending */
 body::before {
   content: "";
   position: fixed;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(255,106,0,0.15), transparent 70%);
-  animation: moveGlow 10s linear infinite;
-}
-
-@keyframes moveGlow {
-  0% { transform: translate(-20%, -20%); }
-  50% { transform: translate(20%, 20%); }
-  100% { transform: translate(-20%, -20%); }
+  inset: 0;
+  background: radial-gradient(circle, transparent 30%, black 90%);
 }
 
 /* Logo */
 .logo {
   margin-top: 60px;
-  width: 160px;
-  filter: drop-shadow(0 0 20px #FF6A00);
-  animation: float 3s ease-in-out infinite;
-}
-
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
+  width: 200px;
+  filter: drop-shadow(0 0 25px #FF6A00) drop-shadow(0 0 25px #0A1AFF);
 }
 
 /* Title */
 h1 {
-  margin-top: 10px;
+  margin-top: 15px;
   font-size: 36px;
   letter-spacing: 4px;
-  background: linear-gradient(90deg, #0A1AFF, #FF6A00);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: white;
+  text-shadow:
+    -2px 0 #0A1AFF,
+    2px 0 #FF6A00;
 }
 
 /* Container */
@@ -61,7 +48,7 @@ h1 {
   padding: 20px;
 }
 
-/* Glass Buttons */
+/* Buttons */
 .button {
   display: block;
   margin: 18px 0;
@@ -73,43 +60,26 @@ h1 {
   color: white;
 
   background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(10px);
 
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
 
-  transition: 0.3s;
-  position: relative;
-}
-
-/* Neon glow */
-.button::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 18px;
-  background: linear-gradient(45deg, #0A1AFF, #FF6A00);
-  opacity: 0;
   transition: 0.3s;
 }
 
-.button:hover::after {
-  opacity: 0.2;
-}
-
+/* Hover */
 .button:hover {
-  transform: scale(1.05);
+  transform: scale(1.08);
+  box-shadow:
+    0 0 20px #0A1AFF,
+    0 0 20px #FF6A00;
 }
-
-/* Platform hover colors */
-.twitch:hover { box-shadow: 0 0 25px #9146FF; }
-.kick:hover { box-shadow: 0 0 25px #00FF99; }
-.youtube:hover { box-shadow: 0 0 25px #FF0000; }
 
 /* Footer */
 .footer {
   margin-top: 40px;
   font-size: 13px;
-  color: #aaa;
+  color: #ccc;
   letter-spacing: 2px;
 }
 </style>
@@ -118,23 +88,22 @@ h1 {
 
 <body>
 
-<!-- ضع هنا صورة الشعار -->
 <img src="omody_main_logo.png" class="logo">
 
 <h1>OMODY</h1>
 
 <div class="container">
 
-<a class="button twitch" href="https://twitch.tv/OMODYTV">
-  🎮 Twitch
+<a class="button" href="https://twitch.tv/OMODYTV">
+🎮 Twitch
 </a>
 
-<a class="button kick" href="https://kick.com/OMODYTV">
-  🎥 Kick
+<a class="button" href="https://kick.com/OMODYTV">
+🎥 Kick
 </a>
 
-<a class="button youtube" href="https://youtube.com/@OMODYTV/live">
-  ▶️ YouTube
+<a class="button" href="https://youtube.com/@OMODYTV/live">
+▶️ YouTube
 </a>
 
 </div>
